@@ -1,0 +1,1711 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Layerwise Relevance Propogation &#8212; Cookbook Template</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Code for training Convolutional Neural Network" href="CNN_training_example.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/arm_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Cookbook Template</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../markdown.html">
+                    Open Classification of Regimes in the Southeast USA
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Notebooks
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="CNN_training_example.html">
+   Code for training Convolutional Neural Network
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Layerwise Relevance Propogation
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ARM-Development/arm-cookbook-template/main?urlpath=lab/tree/notebooks/notebooks/LayerwiseRelevancePropogation.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://jupyterhub.arm.gov/hub/user-redirect/git-pull?repo=https%3A//github.com/ARM-Development/arm-cookbook-template&urlpath=lab/tree/arm-cookbook-template/notebooks/notebooks/LayerwiseRelevancePropogation.ipynb&branch=main"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on JupyterHub"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="headerbtn__text-container">JupyterHub</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/notebooks/LayerwiseRelevancePropogation.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Layerwise Relevance Propogation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#layerwiserelevancepropogation-class">
+   LayerwiseRelevancePropogation class
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-input-model">
+   Loading the input model
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-input-data">
+     Load the input data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-model-predictions">
+     Generate model predictions
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-model-accuracy">
+     Test model accuracy
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-all-of-the-relevances">
+     Generate all of the relevances
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Layerwise Relevance Propogation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Layerwise Relevance Propogation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#layerwiserelevancepropogation-class">
+   LayerwiseRelevancePropogation class
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-input-model">
+   Loading the input model
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-input-data">
+     Load the input data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-model-predictions">
+     Generate model predictions
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-model-accuracy">
+     Test model accuracy
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-all-of-the-relevances">
+     Generate all of the relevances
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="layerwise-relevance-propogation">
+<h1>Layerwise Relevance Propogation<a class="headerlink" href="#layerwise-relevance-propogation" title="Permalink to this headline">#</a></h1>
+<p>This notebook shows how to perform layerwise relevance propogation on a pretrained CNN network.</p>
+<p>First, load the required libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="o">%</span><span class="k">pylab</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="layerwiserelevancepropogation-class">
+<h1>LayerwiseRelevancePropogation class<a class="headerlink" href="#layerwiserelevancepropogation-class" title="Permalink to this headline">#</a></h1>
+<p>This class will do the LRP on a pretrained model. Right now, this class supports:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* Conv2D, Dense, Add, BatchNormalization, and Pooling layers
+* Multiple branches within the neural network and multiple inputs
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LayerwiseRelevancePropogation</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-5</span>
+        <span class="c1"># Count the number of input layers --&gt; Number of CNN networks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_inputs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pooling_type</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;input_&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">no_inputs</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="mi">1</span>
+        
+    <span class="k">def</span> <span class="nf">backprop_dense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="n">w_pos</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w_pos</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+        <span class="n">c_p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">w_pos</span><span class="p">))</span>
+
+        <span class="n">w_neg</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w_neg</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+        <span class="n">c_n</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">w_neg</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">c_p</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">c_n</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">backprop_flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">relprop_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_n</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">x</span>
+        
+    <span class="k">def</span> <span class="nf">relprop_batchnorm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">mmean</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">mvar</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">batch_normalization</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mmean</span><span class="p">,</span> <span class="n">mvar</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">g</span><span class="p">:</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">batch_normalization</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">mmean</span><span class="p">,</span> <span class="n">mvar</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">x</span>
+     
+    <span class="k">def</span> <span class="nf">relprop_conv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strides</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">strides</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">strides</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">w_pos</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w_pos</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+        <span class="n">c_p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d_backprop_input</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">w_pos</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+
+        <span class="n">w_neg</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w_neg</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+        <span class="n">c_n</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d_backprop_input</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">w_neg</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">c_p</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">c_n</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">relprop_pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strides</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">strides</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">strides</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ksize</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">ksize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ksize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ksize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pooling_type</span> <span class="o">==</span> <span class="s1">&#39;avg&#39;</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ksize</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+            <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">g</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="n">R</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ksize</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pooling_type</span> <span class="o">==</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ksize</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">/</span> <span class="n">z</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">raw_ops</span><span class="o">.</span><span class="n">MaxPoolGradV2</span><span class="p">(</span><span class="n">orig_input</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">orig_output</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">grad</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="n">ksize</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error: no such unpooling operation.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">calc_relevance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_inputs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InputError</span><span class="p">(</span><span class="s2">&quot;Not enough inputs for model. Need </span><span class="si">%d</span><span class="s2"> inputs&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_inputs</span><span class="p">)</span>
+        <span class="n">cur_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">cur_relevance</span> <span class="o">=</span> <span class="n">outputs</span>
+        <span class="n">output_relevances</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="n">output_relevances</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="c1"># Evaluate x for each layer:</span>
+        <span class="n">x_layers</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">my_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">my_layer</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">x_layers</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">my_layer</span><span class="p">(</span><span class="n">x_layers</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x_layers</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">my_layer</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x_layers</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">input</span><span class="p">))</span>
+                
+        <span class="n">x_layers</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="c1"># Backpropgate relevances</span>
+        <span class="k">for</span> <span class="n">my_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">my_layer</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">inp_layer_name</span> <span class="o">=</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;add&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">x_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_layers</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">input</span><span class="p">]</span>
+                <span class="n">out_layer_name</span> <span class="o">=</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">_outbound_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">add_relevances</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relprop_add</span><span class="p">(</span>
+                    <span class="n">x_list</span><span class="p">,</span> <span class="n">output_relevances</span><span class="p">[</span><span class="n">out_layer_name</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_inputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">continue</span>
+            
+
+            <span class="n">inp_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_layer</span><span class="p">(</span><span class="n">inp_layer_name</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">out_layer_name</span> <span class="o">=</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">_outbound_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">out_layer_name</span> <span class="o">=</span> <span class="s2">&quot;output&quot;</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;dense&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;class&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">output_relevances</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backprop_dense</span><span class="p">(</span>
+                    <span class="n">x_layers</span><span class="p">[</span><span class="n">inp_layer_name</span><span class="p">],</span>
+                    <span class="n">my_layer</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">output_relevances</span><span class="p">[</span><span class="n">out_layer_name</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="s1">&#39;conv2d&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                
+                <span class="n">output_relevances</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relprop_conv</span><span class="p">(</span>
+                    <span class="n">x_layers</span><span class="p">[</span><span class="n">inp_layer_name</span><span class="p">],</span>
+                    <span class="n">output_relevances</span><span class="p">[</span><span class="n">out_layer_name</span><span class="p">],</span>
+                    <span class="n">my_layer</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
+                    <span class="n">strides</span><span class="o">=</span><span class="n">my_layer</span><span class="o">.</span><span class="n">strides</span><span class="p">,</span> 
+                    <span class="n">padding</span><span class="o">=</span><span class="n">my_layer</span><span class="o">.</span><span class="n">padding</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="s1">&#39;batch_normalization&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">output_relevances</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relprop_batchnorm</span><span class="p">(</span>
+                        <span class="n">x_layers</span><span class="p">[</span><span class="n">inp_layer_name</span><span class="p">],</span> 
+                        <span class="n">output_relevances</span><span class="p">[</span><span class="n">out_layer_name</span><span class="p">],</span>
+                        <span class="n">my_layer</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="s1">&#39;flatten&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">output_relevances</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backprop_flatten</span><span class="p">(</span>
+                    <span class="n">x_layers</span><span class="p">[</span><span class="n">inp_layer_name</span><span class="p">],</span>
+                    <span class="n">add_relevances</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="s1">&#39;max_pooling2d&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">output_relevances</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relprop_pool</span><span class="p">(</span>
+                    <span class="n">x_layers</span><span class="p">[</span><span class="n">inp_layer_name</span><span class="p">],</span>
+                    <span class="n">output_relevances</span><span class="p">[</span><span class="n">out_layer_name</span><span class="p">],</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">pool_size</span><span class="p">,</span>
+                    <span class="n">my_layer</span><span class="o">.</span><span class="n">strides</span><span class="p">,</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">padding</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="s1">&#39;input&#39;</span> <span class="ow">in</span> <span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">output_relevances</span><span class="p">[</span><span class="n">my_layer</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_relevances</span><span class="p">[</span><span class="n">out_layer_name</span><span class="p">]</span>
+            
+        <span class="k">return</span> <span class="n">output_relevances</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="loading-the-input-model">
+<h1>Loading the input model<a class="headerlink" href="#loading-the-input-model" title="Permalink to this headline">#</a></h1>
+<p>Here, we load the input model that we are going to perform the relevance calculations on. We will use the EPA AQI classifier model from earlier on in order to do so.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hour</span> <span class="o">=</span> <span class="mi">72</span>
+<span class="n">my_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/opencrums/models/classifier&#39;</span><span class="p">)</span>
+<span class="n">my_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model&quot;
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_SSMASS (InputLayer)      [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_SSFLUXU (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_SSFLUXV (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_SO4MASS (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_SUFLUXU (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_SUFLUXV (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_SO2MASS (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_OCMASS (InputLayer)      [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_OCFLUXU (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_OCFLUXV (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_DUMASS (InputLayer)      [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_DUFLUXU (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_DUFLUXV (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_DMSMASS (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_BCMASS (InputLayer)      [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_BCFLUXU (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_BCFLUXV (InputLayer)     [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ conv2d (Conv2D)                (None, 20, 32, 32)   160         [&#39;input_SSMASS[0][0]&#39;]           
+                                                                                                  
+ conv2d_4 (Conv2D)              (None, 20, 32, 32)   160         [&#39;input_SSFLUXU[0][0]&#39;]          
+                                                                                                  
+ conv2d_8 (Conv2D)              (None, 20, 32, 32)   160         [&#39;input_SSFLUXV[0][0]&#39;]          
+                                                                                                  
+ conv2d_12 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_SO4MASS[0][0]&#39;]          
+                                                                                                  
+ conv2d_16 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_SUFLUXU[0][0]&#39;]          
+                                                                                                  
+ conv2d_20 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_SUFLUXV[0][0]&#39;]          
+                                                                                                  
+ conv2d_24 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_SO2MASS[0][0]&#39;]          
+                                                                                                  
+ conv2d_28 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_OCMASS[0][0]&#39;]           
+                                                                                                  
+ conv2d_32 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_OCFLUXU[0][0]&#39;]          
+                                                                                                  
+ conv2d_36 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_OCFLUXV[0][0]&#39;]          
+                                                                                                  
+ conv2d_40 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_DUMASS[0][0]&#39;]           
+                                                                                                  
+ conv2d_44 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_DUFLUXU[0][0]&#39;]          
+                                                                                                  
+ conv2d_48 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_DUFLUXV[0][0]&#39;]          
+                                                                                                  
+ conv2d_52 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_DMSMASS[0][0]&#39;]          
+                                                                                                  
+ conv2d_56 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_BCMASS[0][0]&#39;]           
+                                                                                                  
+ conv2d_60 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_BCFLUXU[0][0]&#39;]          
+                                                                                                  
+ conv2d_64 (Conv2D)             (None, 20, 32, 32)   160         [&#39;input_BCFLUXV[0][0]&#39;]          
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 20, 32, 32)  128         [&#39;conv2d[0][0]&#39;]                 
+ alization)                                                                                       
+                                                                                                  
+ batch_normalization_4 (BatchNo  (None, 20, 32, 32)  128         [&#39;conv2d_4[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_8 (BatchNo  (None, 20, 32, 32)  128         [&#39;conv2d_8[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_12 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_12[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_16 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_16[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_20 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_20[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_24 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_24[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_28 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_28[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_32 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_32[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_36 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_36[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_40 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_40[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_44 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_44[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_48 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_48[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_52 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_52[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_56 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_56[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_60 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_60[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_64 (BatchN  (None, 20, 32, 32)  128         [&#39;conv2d_64[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ max_pooling2d (MaxPooling2D)   (None, 10, 16, 32)   0           [&#39;batch_normalization[0][0]&#39;]    
+                                                                                                  
+ max_pooling2d_4 (MaxPooling2D)  (None, 10, 16, 32)  0           [&#39;batch_normalization_4[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_8 (MaxPooling2D)  (None, 10, 16, 32)  0           [&#39;batch_normalization_8[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_12 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_12[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_16 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_16[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_20 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_20[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_24 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_24[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_28 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_28[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_32 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_32[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_36 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_36[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_40 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_40[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_44 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_44[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_48 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_48[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_52 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_52[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_56 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_56[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_60 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_60[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_64 (MaxPooling2D  (None, 10, 16, 32)  0           [&#39;batch_normalization_64[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ conv2d_1 (Conv2D)              (None, 10, 16, 32)   4128        [&#39;max_pooling2d[0][0]&#39;]          
+                                                                                                  
+ conv2d_5 (Conv2D)              (None, 10, 16, 32)   4128        [&#39;max_pooling2d_4[0][0]&#39;]        
+                                                                                                  
+ conv2d_9 (Conv2D)              (None, 10, 16, 32)   4128        [&#39;max_pooling2d_8[0][0]&#39;]        
+                                                                                                  
+ conv2d_13 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_12[0][0]&#39;]       
+                                                                                                  
+ conv2d_17 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_16[0][0]&#39;]       
+                                                                                                  
+ conv2d_21 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_20[0][0]&#39;]       
+                                                                                                  
+ conv2d_25 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_24[0][0]&#39;]       
+                                                                                                  
+ conv2d_29 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_28[0][0]&#39;]       
+                                                                                                  
+ conv2d_33 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_32[0][0]&#39;]       
+                                                                                                  
+ conv2d_37 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_36[0][0]&#39;]       
+                                                                                                  
+ conv2d_41 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_40[0][0]&#39;]       
+                                                                                                  
+ conv2d_45 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_44[0][0]&#39;]       
+                                                                                                  
+ conv2d_49 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_48[0][0]&#39;]       
+                                                                                                  
+ conv2d_53 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_52[0][0]&#39;]       
+                                                                                                  
+ conv2d_57 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_56[0][0]&#39;]       
+                                                                                                  
+ conv2d_61 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_60[0][0]&#39;]       
+                                                                                                  
+ conv2d_65 (Conv2D)             (None, 10, 16, 32)   4128        [&#39;max_pooling2d_64[0][0]&#39;]       
+                                                                                                  
+ batch_normalization_1 (BatchNo  (None, 10, 16, 32)  128         [&#39;conv2d_1[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_5 (BatchNo  (None, 10, 16, 32)  128         [&#39;conv2d_5[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_9 (BatchNo  (None, 10, 16, 32)  128         [&#39;conv2d_9[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_13 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_13[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_17 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_17[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_21 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_21[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_25 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_25[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_29 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_29[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_33 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_33[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_37 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_37[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_41 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_41[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_45 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_45[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_49 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_49[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_53 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_53[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_57 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_57[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_61 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_61[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_65 (BatchN  (None, 10, 16, 32)  128         [&#39;conv2d_65[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ max_pooling2d_1 (MaxPooling2D)  (None, 5, 8, 32)    0           [&#39;batch_normalization_1[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_5 (MaxPooling2D)  (None, 5, 8, 32)    0           [&#39;batch_normalization_5[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_9 (MaxPooling2D)  (None, 5, 8, 32)    0           [&#39;batch_normalization_9[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_13 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_13[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_17 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_17[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_21 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_21[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_25 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_25[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_29 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_29[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_33 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_33[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_37 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_37[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_41 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_41[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_45 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_45[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_49 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_49[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_53 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_53[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_57 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_57[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_61 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_61[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_65 (MaxPooling2D  (None, 5, 8, 32)    0           [&#39;batch_normalization_65[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ conv2d_2 (Conv2D)              (None, 5, 8, 32)     4128        [&#39;max_pooling2d_1[0][0]&#39;]        
+                                                                                                  
+ conv2d_6 (Conv2D)              (None, 5, 8, 32)     4128        [&#39;max_pooling2d_5[0][0]&#39;]        
+                                                                                                  
+ conv2d_10 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_9[0][0]&#39;]        
+                                                                                                  
+ conv2d_14 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_13[0][0]&#39;]       
+                                                                                                  
+ conv2d_18 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_17[0][0]&#39;]       
+                                                                                                  
+ conv2d_22 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_21[0][0]&#39;]       
+                                                                                                  
+ conv2d_26 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_25[0][0]&#39;]       
+                                                                                                  
+ conv2d_30 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_29[0][0]&#39;]       
+                                                                                                  
+ conv2d_34 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_33[0][0]&#39;]       
+                                                                                                  
+ conv2d_38 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_37[0][0]&#39;]       
+                                                                                                  
+ conv2d_42 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_41[0][0]&#39;]       
+                                                                                                  
+ conv2d_46 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_45[0][0]&#39;]       
+                                                                                                  
+ conv2d_50 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_49[0][0]&#39;]       
+                                                                                                  
+ conv2d_54 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_53[0][0]&#39;]       
+                                                                                                  
+ conv2d_58 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_57[0][0]&#39;]       
+                                                                                                  
+ conv2d_62 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_61[0][0]&#39;]       
+                                                                                                  
+ conv2d_66 (Conv2D)             (None, 5, 8, 32)     4128        [&#39;max_pooling2d_65[0][0]&#39;]       
+                                                                                                  
+ batch_normalization_2 (BatchNo  (None, 5, 8, 32)    128         [&#39;conv2d_2[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_6 (BatchNo  (None, 5, 8, 32)    128         [&#39;conv2d_6[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_10 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_10[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_14 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_14[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_18 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_18[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_22 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_22[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_26 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_26[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_30 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_30[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_34 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_34[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_38 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_38[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_42 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_42[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_46 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_46[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_50 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_50[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_54 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_54[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_58 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_58[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_62 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_62[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_66 (BatchN  (None, 5, 8, 32)    128         [&#39;conv2d_66[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ max_pooling2d_2 (MaxPooling2D)  (None, 2, 4, 32)    0           [&#39;batch_normalization_2[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_6 (MaxPooling2D)  (None, 2, 4, 32)    0           [&#39;batch_normalization_6[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_10 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_10[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_14 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_14[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_18 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_18[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_22 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_22[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_26 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_26[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_30 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_30[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_34 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_34[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_38 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_38[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_42 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_42[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_46 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_46[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_50 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_50[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_54 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_54[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_58 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_58[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_62 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_62[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_66 (MaxPooling2D  (None, 2, 4, 32)    0           [&#39;batch_normalization_66[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ conv2d_3 (Conv2D)              (None, 2, 4, 32)     4128        [&#39;max_pooling2d_2[0][0]&#39;]        
+                                                                                                  
+ conv2d_7 (Conv2D)              (None, 2, 4, 32)     4128        [&#39;max_pooling2d_6[0][0]&#39;]        
+                                                                                                  
+ conv2d_11 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_10[0][0]&#39;]       
+                                                                                                  
+ conv2d_15 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_14[0][0]&#39;]       
+                                                                                                  
+ conv2d_19 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_18[0][0]&#39;]       
+                                                                                                  
+ conv2d_23 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_22[0][0]&#39;]       
+                                                                                                  
+ conv2d_27 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_26[0][0]&#39;]       
+                                                                                                  
+ conv2d_31 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_30[0][0]&#39;]       
+                                                                                                  
+ conv2d_35 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_34[0][0]&#39;]       
+                                                                                                  
+ conv2d_39 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_38[0][0]&#39;]       
+                                                                                                  
+ conv2d_43 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_42[0][0]&#39;]       
+                                                                                                  
+ conv2d_47 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_46[0][0]&#39;]       
+                                                                                                  
+ conv2d_51 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_50[0][0]&#39;]       
+                                                                                                  
+ conv2d_55 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_54[0][0]&#39;]       
+                                                                                                  
+ conv2d_59 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_58[0][0]&#39;]       
+                                                                                                  
+ conv2d_63 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_62[0][0]&#39;]       
+                                                                                                  
+ conv2d_67 (Conv2D)             (None, 2, 4, 32)     4128        [&#39;max_pooling2d_66[0][0]&#39;]       
+                                                                                                  
+ batch_normalization_3 (BatchNo  (None, 2, 4, 32)    128         [&#39;conv2d_3[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_7 (BatchNo  (None, 2, 4, 32)    128         [&#39;conv2d_7[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_11 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_11[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_15 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_15[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_19 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_19[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_23 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_23[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_27 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_27[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_31 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_31[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_35 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_35[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_39 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_39[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_43 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_43[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_47 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_47[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_51 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_51[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_55 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_55[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_59 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_59[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_63 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_63[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ batch_normalization_67 (BatchN  (None, 2, 4, 32)    128         [&#39;conv2d_67[0][0]&#39;]              
+ ormalization)                                                                                    
+                                                                                                  
+ max_pooling2d_3 (MaxPooling2D)  (None, 1, 2, 32)    0           [&#39;batch_normalization_3[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_7 (MaxPooling2D)  (None, 1, 2, 32)    0           [&#39;batch_normalization_7[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_11 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_11[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_15 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_15[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_19 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_19[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_23 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_23[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_27 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_27[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_31 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_31[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_35 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_35[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_39 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_39[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_43 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_43[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_47 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_47[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_51 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_51[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_55 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_55[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_59 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_59[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_63 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_63[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ max_pooling2d_67 (MaxPooling2D  (None, 1, 2, 32)    0           [&#39;batch_normalization_67[0][0]&#39;] 
+ )                                                                                                
+                                                                                                  
+ flatten (Flatten)              (None, 64)           0           [&#39;max_pooling2d_3[0][0]&#39;]        
+                                                                                                  
+ flatten_1 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_7[0][0]&#39;]        
+                                                                                                  
+ flatten_2 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_11[0][0]&#39;]       
+                                                                                                  
+ flatten_3 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_15[0][0]&#39;]       
+                                                                                                  
+ flatten_4 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_19[0][0]&#39;]       
+                                                                                                  
+ flatten_5 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_23[0][0]&#39;]       
+                                                                                                  
+ flatten_6 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_27[0][0]&#39;]       
+                                                                                                  
+ flatten_7 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_31[0][0]&#39;]       
+                                                                                                  
+ flatten_8 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_35[0][0]&#39;]       
+                                                                                                  
+ flatten_9 (Flatten)            (None, 64)           0           [&#39;max_pooling2d_39[0][0]&#39;]       
+                                                                                                  
+ flatten_10 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_43[0][0]&#39;]       
+                                                                                                  
+ flatten_11 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_47[0][0]&#39;]       
+                                                                                                  
+ flatten_12 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_51[0][0]&#39;]       
+                                                                                                  
+ flatten_13 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_55[0][0]&#39;]       
+                                                                                                  
+ flatten_14 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_59[0][0]&#39;]       
+                                                                                                  
+ flatten_15 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_63[0][0]&#39;]       
+                                                                                                  
+ flatten_16 (Flatten)           (None, 64)           0           [&#39;max_pooling2d_67[0][0]&#39;]       
+                                                                                                  
+ add (Add)                      (None, 64)           0           [&#39;flatten[0][0]&#39;,                
+                                                                  &#39;flatten_1[0][0]&#39;,              
+                                                                  &#39;flatten_2[0][0]&#39;,              
+                                                                  &#39;flatten_3[0][0]&#39;,              
+                                                                  &#39;flatten_4[0][0]&#39;,              
+                                                                  &#39;flatten_5[0][0]&#39;,              
+                                                                  &#39;flatten_6[0][0]&#39;,              
+                                                                  &#39;flatten_7[0][0]&#39;,              
+                                                                  &#39;flatten_8[0][0]&#39;,              
+                                                                  &#39;flatten_9[0][0]&#39;,              
+                                                                  &#39;flatten_10[0][0]&#39;,             
+                                                                  &#39;flatten_11[0][0]&#39;,             
+                                                                  &#39;flatten_12[0][0]&#39;,             
+                                                                  &#39;flatten_13[0][0]&#39;,             
+                                                                  &#39;flatten_14[0][0]&#39;,             
+                                                                  &#39;flatten_15[0][0]&#39;,             
+                                                                  &#39;flatten_16[0][0]&#39;]             
+                                                                                                  
+ dense (Dense)                  (None, 64)           4160        [&#39;add[0][0]&#39;]                    
+                                                                                                  
+ batch_normalization_68 (BatchN  (None, 64)          256         [&#39;dense[0][0]&#39;]                  
+ ormalization)                                                                                    
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           4160        [&#39;batch_normalization_68[0][0]&#39;] 
+                                                                                                  
+ batch_normalization_69 (BatchN  (None, 64)          256         [&#39;dense_1[0][0]&#39;]                
+ ormalization)                                                                                    
+                                                                                                  
+ dense_2 (Dense)                (None, 64)           4160        [&#39;batch_normalization_69[0][0]&#39;] 
+                                                                                                  
+ batch_normalization_70 (BatchN  (None, 64)          256         [&#39;dense_2[0][0]&#39;]                
+ ormalization)                                                                                    
+                                                                                                  
+ class (Dense)                  (None, 5)            325         [&#39;batch_normalization_70[0][0]&#39;] 
+                                                                                                  
+==================================================================================================
+Total params: 235,525
+Trainable params: 230,789
+Non-trainable params: 4,736
+__________________________________________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<section id="load-the-input-data">
+<h2>Load the input data<a class="headerlink" href="#load-the-input-data" title="Permalink to this headline">#</a></h2>
+<p>This code will first load the epa air now .csv data into the air_now_df pandas DataFrame.  Then, the code will load the MERRA2 data in the specified path. Note: the MERRA2 data are preprocessed to include only the relevant domain of interest in order to save training time and memory.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">air_now_data</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/epa_air_now/*.csv&#39;</span><span class="p">)</span>
+<span class="n">air_now_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="n">air_now_data</span><span class="p">))</span>
+<span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;DateObserved&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; 00:00:00&#39;</span><span class="p">)</span>
+<span class="n">air_now_df</span> <span class="o">=</span> <span class="n">air_now_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
+<span class="n">air_now_df</span> <span class="o">=</span> <span class="n">air_now_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;CategoryNumber&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="k">def</span> <span class="nf">get_air_now_label</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">air_now_df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">time</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">air_now_df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">time</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;CategoryNumber&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">species</span><span class="p">):</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_reduced/</span><span class="si">%s</span><span class="s1">CMASS*.nc&#39;</span> <span class="o">%</span> <span class="n">species</span><span class="p">)</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">CMASS&quot;</span> <span class="o">%</span> <span class="n">species</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">old_shape</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">old_shape</span><span class="p">)</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">inputs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">species</span> <span class="o">==</span> <span class="s2">&quot;SO4&quot;</span> <span class="ow">or</span> <span class="n">species</span> <span class="o">==</span> <span class="s2">&quot;DMS&quot;</span> <span class="ow">or</span> <span class="n">species</span> <span class="o">==</span> <span class="s2">&quot;SO2&quot;</span><span class="p">:</span>
+       <span class="n">inp</span> <span class="o">=</span> <span class="s2">&quot;SU&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="n">inp</span> <span class="o">=</span> <span class="n">species</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_reduced/</span><span class="si">%s</span><span class="s1">FLUXU*.nc&#39;</span> <span class="o">%</span> <span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">FLUXU&quot;</span> <span class="o">%</span> <span class="n">inp</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">old_shape</span><span class="p">)</span>
+    <span class="n">inputs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x2</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_reduced/</span><span class="si">%s</span><span class="s1">FLUXV*.nc&#39;</span> <span class="o">%</span> <span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">FLUXV&quot;</span> <span class="o">%</span> <span class="n">inp</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">old_shape</span><span class="p">)</span>
+    <span class="n">inputs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x2</span>
+    <span class="n">classification</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">get_air_now_label</span><span class="p">,</span> <span class="n">times</span><span class="p">)))</span>
+    <span class="n">where_valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">classification</span><span class="p">)</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="n">where_valid</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">classification</span> <span class="o">=</span> <span class="n">classification</span><span class="p">[</span><span class="n">where_valid</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="n">where_valid</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">hour</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">classification</span> <span class="o">=</span> <span class="n">classification</span><span class="p">[</span><span class="n">hour</span><span class="p">:]</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[:(</span><span class="o">-</span><span class="n">hour</span><span class="p">),</span> <span class="p">:,</span> <span class="p">:</span> <span class="p">:]</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="n">hour</span><span class="p">:]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">classification</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">classification</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">times</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">x_dataset_train</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_</span><span class="si">%s</span><span class="s1">MASS&#39;</span> <span class="o">%</span> <span class="n">species</span><span class="p">:</span> <span class="n">inputs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="s1">&#39;input_</span><span class="si">%s</span><span class="s1">FLUXU&#39;</span> <span class="o">%</span> <span class="n">inp</span><span class="p">:</span> <span class="n">inputs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="s1">&#39;input_</span><span class="si">%s</span><span class="s1">FLUXV&#39;</span> <span class="o">%</span> <span class="n">inp</span><span class="p">:</span> <span class="n">inputs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]}</span>
+
+    <span class="k">return</span> <span class="n">x_dataset_train</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,:</span><span class="mi">5</span><span class="p">],</span> <span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="n">x_ds_train</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">x_ds_test</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">species_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SS&#39;</span><span class="p">,</span> <span class="s1">&#39;SO4&#39;</span><span class="p">,</span> <span class="s1">&#39;SO2&#39;</span><span class="p">,</span> <span class="s1">&#39;OC&#39;</span><span class="p">,</span><span class="s1">&#39;DU&#39;</span><span class="p">,</span> <span class="s1">&#39;DMS&#39;</span><span class="p">,</span> <span class="s1">&#39;BC&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">species</span> <span class="ow">in</span> <span class="n">species_list</span><span class="p">:</span>
+    <span class="n">x_ds_train1</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">t_train</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
+    <span class="n">x_ds_train</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x_ds_train1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">x_ds_train</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">x_ds_train</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_ds_train</span><span class="p">[</span><span class="n">key</span><span class="p">][:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+&lt;xarray.Dataset&gt;
+Dimensions:    (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon        (lon) float64 -105.0 -104.4 -103.8 ... -86.88 -86.25 -85.62
+  * lat        (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time       (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    SSCMASS    (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+    SSCMASS25  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+&lt;xarray.Dataset&gt;
+Dimensions:   (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon       (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat       (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    SO4CMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+&lt;xarray.Dataset&gt;
+Dimensions:   (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon       (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat       (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    SO2CMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+&lt;xarray.Dataset&gt;
+Dimensions:  (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon      (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat      (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 32.5 33.0 33.5 34.0 34.5
+  * time     (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    OCCMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+&lt;xarray.Dataset&gt;
+Dimensions:    (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon        (lon) float64 -105.0 -104.4 -103.8 ... -86.88 -86.25 -85.62
+  * lat        (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time       (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    DUCMASS    (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+    DUCMASS25  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+&lt;xarray.Dataset&gt;
+Dimensions:   (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon       (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat       (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    DMSCMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+&lt;xarray.Dataset&gt;
+Dimensions:  (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon      (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat      (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 32.5 33.0 33.5 34.0 34.5
+  * time     (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    BCCMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+(64560,) (64560,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="generate-model-predictions">
+<h2>Generate model predictions<a class="headerlink" href="#generate-model-predictions" title="Permalink to this headline">#</a></h2>
+<p>Use the keras .predict to generate predictions on a set of test data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_predict</span> <span class="o">=</span> <span class="n">my_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_ds_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_predicts</span> <span class="o">=</span> <span class="n">y_predict</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_tests</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_predicts</span><span class="p">,</span> <span class="n">y_tests</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="test-model-accuracy">
+<h2>Test model accuracy<a class="headerlink" href="#test-model-accuracy" title="Permalink to this headline">#</a></h2>
+<p>Generate a confusion matrix showing the predicted vs actual AQI values. We want to check that the confusion matrix shows that the model can accurately predict AQI before performing the layerwise relevance propogation to ensure that the variable relevances are going towards accurate predictions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#matrix[matrix == 0] = np.nan</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{:d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">z</span><span class="p">)),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Moderate&#39;</span><span class="p">,</span> <span class="s1">&#39;Unhealthy Sens.&#39;</span><span class="p">,</span> <span class="s1">&#39;Unhealthy&#39;</span><span class="p">,</span> <span class="s1">&#39;Hazardous&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;Moderate&#39;</span><span class="p">,</span> <span class="s1">&#39;Unhealthy Sens.&#39;</span><span class="p">,</span> <span class="s1">&#39;Unhealthy&#39;</span><span class="p">,</span> <span class="s1">&#39;Hazardous&#39;</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;confusion_matrix_aqi_</span><span class="si">%d</span><span class="s1">hr.png&#39;</span> <span class="o">%</span> <span class="n">hour</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3657824/1294337932.py:7: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_xticklabels([&#39;&#39;, &#39;Good&#39;, &#39;Moderate&#39;, &#39;Unhealthy Sens.&#39;, &#39;Unhealthy&#39;, &#39;Hazardous&#39;])
+/tmp/ipykernel_3657824/1294337932.py:8: UserWarning: FixedFormatter should only be used together with FixedLocator
+  ax.set_yticklabels([&#39;&#39;, &#39;Good&#39;, &#39;Moderate&#39;, &#39;Unhealthy Sens.&#39;, &#39;Unhealthy&#39;, &#39;Hazardous&#39;])
+</pre></div>
+</div>
+<img alt="../_images/LayerwiseRelevancePropogation_13_1.png" src="../_images/LayerwiseRelevancePropogation_13_1.png" />
+</div>
+</div>
+</section>
+<section id="generate-all-of-the-relevances">
+<h2>Generate all of the relevances<a class="headerlink" href="#generate-all-of-the-relevances" title="Permalink to this headline">#</a></h2>
+<p>These next two code blocks will generate the relevance information. The relevance dictionaries are stored in pickle files that contain the dictionary of relevances for each of the input variables and model layers as well as the time of each sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">slice_input_ds</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="n">x_new</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">x_new</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">y_new</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">t_test</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">t_test</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lrp</span> <span class="o">=</span> <span class="n">LayerwiseRelevancePropogation</span><span class="p">(</span><span class="n">my_model</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">x_slice</span><span class="p">,</span> <span class="n">y_slice</span><span class="p">,</span> <span class="n">t_slice</span> <span class="o">=</span> <span class="n">slice_input_ds</span><span class="p">(</span><span class="n">x_ds_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">t_train</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">relevance</span> <span class="o">=</span> <span class="n">lrp</span><span class="o">.</span><span class="n">calc_relevance</span><span class="p">(</span><span class="n">x_slice</span><span class="p">,</span> <span class="n">y_slice</span><span class="p">)</span>
+    <span class="n">relevance</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_slice</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;relevance</span><span class="si">%d</span><span class="s1">-</span><span class="si">%s</span><span class="s1">hr.pickle&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">relevance</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+1100
+1200
+1300
+1400
+1500
+1600
+1700
+1800
+1900
+2000
+2100
+2200
+2300
+2400
+2500
+2600
+2700
+2800
+2900
+3000
+3100
+3200
+3300
+3400
+3500
+3600
+3700
+3800
+3900
+4000
+4100
+4200
+4300
+4400
+4500
+4600
+4700
+4800
+4900
+5000
+5100
+5200
+5300
+5400
+5500
+5600
+5700
+5800
+5900
+6000
+6100
+6200
+6300
+6400
+6500
+6600
+6700
+6800
+6900
+7000
+7100
+7200
+7300
+7400
+7500
+7600
+7700
+7800
+7900
+8000
+8100
+8200
+8300
+8400
+8500
+8600
+8700
+8800
+8900
+9000
+9100
+9200
+9300
+9400
+9500
+9600
+9700
+9800
+9900
+10000
+10100
+10200
+10300
+10400
+10500
+10600
+10700
+10800
+10900
+11000
+11100
+11200
+11300
+11400
+11500
+11600
+11700
+11800
+11900
+12000
+12100
+12200
+12300
+12400
+12500
+12600
+12700
+12800
+12900
+13000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relevance</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;outputs&#39;, &#39;class&#39;, &#39;batch_normalization_36&#39;, &#39;dense_2&#39;, &#39;batch_normalization_35&#39;, &#39;dense_1&#39;, &#39;batch_normalization_34&#39;, &#39;dense&#39;, &#39;flatten_16&#39;, &#39;flatten_15&#39;, &#39;flatten_14&#39;, &#39;flatten_13&#39;, &#39;flatten_12&#39;, &#39;flatten_11&#39;, &#39;flatten_10&#39;, &#39;flatten_9&#39;, &#39;flatten_8&#39;, &#39;flatten_7&#39;, &#39;flatten_6&#39;, &#39;flatten_5&#39;, &#39;flatten_4&#39;, &#39;flatten_3&#39;, &#39;flatten_2&#39;, &#39;flatten_1&#39;, &#39;flatten&#39;, &#39;max_pooling2d_33&#39;, &#39;max_pooling2d_31&#39;, &#39;max_pooling2d_29&#39;, &#39;max_pooling2d_27&#39;, &#39;max_pooling2d_25&#39;, &#39;max_pooling2d_23&#39;, &#39;max_pooling2d_21&#39;, &#39;max_pooling2d_19&#39;, &#39;max_pooling2d_17&#39;, &#39;max_pooling2d_15&#39;, &#39;max_pooling2d_13&#39;, &#39;max_pooling2d_11&#39;, &#39;max_pooling2d_9&#39;, &#39;max_pooling2d_7&#39;, &#39;max_pooling2d_5&#39;, &#39;max_pooling2d_3&#39;, &#39;max_pooling2d_1&#39;, &#39;batch_normalization_33&#39;, &#39;batch_normalization_31&#39;, &#39;batch_normalization_29&#39;, &#39;batch_normalization_27&#39;, &#39;batch_normalization_25&#39;, &#39;batch_normalization_23&#39;, &#39;batch_normalization_21&#39;, &#39;batch_normalization_19&#39;, &#39;batch_normalization_17&#39;, &#39;batch_normalization_15&#39;, &#39;batch_normalization_13&#39;, &#39;batch_normalization_11&#39;, &#39;batch_normalization_9&#39;, &#39;batch_normalization_7&#39;, &#39;batch_normalization_5&#39;, &#39;batch_normalization_3&#39;, &#39;batch_normalization_1&#39;, &#39;conv2d_33&#39;, &#39;conv2d_31&#39;, &#39;conv2d_29&#39;, &#39;conv2d_27&#39;, &#39;conv2d_25&#39;, &#39;conv2d_23&#39;, &#39;conv2d_21&#39;, &#39;conv2d_19&#39;, &#39;conv2d_17&#39;, &#39;conv2d_15&#39;, &#39;conv2d_13&#39;, &#39;conv2d_11&#39;, &#39;conv2d_9&#39;, &#39;conv2d_7&#39;, &#39;conv2d_5&#39;, &#39;conv2d_3&#39;, &#39;conv2d_1&#39;, &#39;max_pooling2d_32&#39;, &#39;max_pooling2d_30&#39;, &#39;max_pooling2d_28&#39;, &#39;max_pooling2d_26&#39;, &#39;max_pooling2d_24&#39;, &#39;max_pooling2d_22&#39;, &#39;max_pooling2d_20&#39;, &#39;max_pooling2d_18&#39;, &#39;max_pooling2d_16&#39;, &#39;max_pooling2d_14&#39;, &#39;max_pooling2d_12&#39;, &#39;max_pooling2d_10&#39;, &#39;max_pooling2d_8&#39;, &#39;max_pooling2d_6&#39;, &#39;max_pooling2d_4&#39;, &#39;max_pooling2d_2&#39;, &#39;max_pooling2d&#39;, &#39;batch_normalization_32&#39;, &#39;batch_normalization_30&#39;, &#39;batch_normalization_28&#39;, &#39;batch_normalization_26&#39;, &#39;batch_normalization_24&#39;, &#39;batch_normalization_22&#39;, &#39;batch_normalization_20&#39;, &#39;batch_normalization_18&#39;, &#39;batch_normalization_16&#39;, &#39;batch_normalization_14&#39;, &#39;batch_normalization_12&#39;, &#39;batch_normalization_10&#39;, &#39;batch_normalization_8&#39;, &#39;batch_normalization_6&#39;, &#39;batch_normalization_4&#39;, &#39;batch_normalization_2&#39;, &#39;batch_normalization&#39;, &#39;conv2d_32&#39;, &#39;conv2d_30&#39;, &#39;conv2d_28&#39;, &#39;conv2d_26&#39;, &#39;conv2d_24&#39;, &#39;conv2d_22&#39;, &#39;conv2d_20&#39;, &#39;conv2d_18&#39;, &#39;conv2d_16&#39;, &#39;conv2d_14&#39;, &#39;conv2d_12&#39;, &#39;conv2d_10&#39;, &#39;conv2d_8&#39;, &#39;conv2d_6&#39;, &#39;conv2d_4&#39;, &#39;conv2d_2&#39;, &#39;conv2d&#39;, &#39;input_BCFLUXV&#39;, &#39;input_BCFLUXU&#39;, &#39;input_BCMASS&#39;, &#39;input_DMSMASS&#39;, &#39;input_DUFLUXV&#39;, &#39;input_DUFLUXU&#39;, &#39;input_DUMASS&#39;, &#39;input_OCFLUXV&#39;, &#39;input_OCFLUXU&#39;, &#39;input_OCMASS&#39;, &#39;input_SO2MASS&#39;, &#39;input_SUFLUXV&#39;, &#39;input_SUFLUXU&#39;, &#39;input_SO4MASS&#39;, &#39;input_SSFLUXV&#39;, &#39;input_SSFLUXU&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="CNN_training_example.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Code for training Convolutional Neural Network</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By ARM Development Team<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
