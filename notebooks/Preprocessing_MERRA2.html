@@ -326,8 +326,8 @@ title="Print to PDF"
 <p>Here, we specify the input dataset path <em>in_merra_path</em>, the output cropped dataset path <em>out_path</em>, and the subset of variables that we want. In this case, the variables that are chosen represent the mass and column flux of the different aerosol species in MERRA5. Other variables such as Angstrom exponent and AOD exist but are related to the total column mass. Therefore, one can use such physical reasoning to reduce the dimensionality of the input space to the variables that would most likely be able to describe the physical characteristics of the aerosol/meteorological regime and remove potentially redundant variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_merra_path</span> <span class="o">=</span> <span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/*.nc4&#39;</span> 
-<span class="n">out_path</span> <span class="o">=</span> <span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_reduced/&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_merra_path</span> <span class="o">=</span> <span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/2010/*.nc4&#39;</span> 
+<span class="n">out_path</span> <span class="o">=</span> <span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_temp/&#39;</span>
     
 <span class="c1"># Only include the variables we want. We can choose the relevant features of interest by </span>
 <span class="n">variable_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BCCMASS&quot;</span><span class="p">,</span> <span class="s2">&quot;BCFLUXU&quot;</span><span class="p">,</span> <span class="s2">&quot;BCFLUXV&quot;</span><span class="p">,</span>
