@@ -1,8 +1,8 @@
 format: jb-book
-root: markdown.md 
+root: README.md 
 parts:
 - caption: Notebooks
   chapters:
-    - file: Preprocessing_MERRA2.ipynb
+    - file: notebooks/Preprocessing_MERRA2.ipynb
     - file: notebooks/CNN_training_example.ipynb
     - file: notebooks/LayerwiseRelevancePropogation.ipynb

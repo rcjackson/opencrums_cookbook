@@ -1,6 +1,6 @@
-title: Cookbook Template
-author: ARM Development Team
-logo: notebooks/images/arm_logo.png
+title: Open Classification of Regimes in the Southeast USA
+author: Geospatial Computing, Innovation, and Sensing @ ANL
+logo: ai4esp.png
 execute:
   execute_notebooks: "off"
 parse:
