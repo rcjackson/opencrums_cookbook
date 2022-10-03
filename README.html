@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Open Classification of Regimes in the Southeast USA &#8212; Cookbook Template</title>
+    <title>Open Classification of Regimes in the Southeast USA &#8212; Open Classification of Regimes in the Southeast USA</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing MERRA2 data" href="notebooks/Preprocessing_MERRA2.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -93,10 +94,10 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="_static/arm_logo.png" class="logo" alt="logo">
+      <img src="_static/ai4esp.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Cookbook Template</h1>
+      <h1 class="site-logo" id="site-title">Open Classification of Regimes in the Southeast USA</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -106,8 +107,8 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="markdown.html">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
                     Open Classification of Regimes in the Southeast USA
                 </a>
             </li>
@@ -118,6 +119,11 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebooks/Preprocessing_MERRA2.html">
+   Preprocessing MERRA2 data
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="notebooks/CNN_training_example.html">
    Code for training Convolutional Neural Network
@@ -238,12 +244,55 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aerosol-regime-classification">
+   Aerosol regime classification.
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#constructing-the-neural-network">
+     Constructing the neural network
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -255,6 +304,38 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aerosol-regime-classification">
+   Aerosol regime classification.
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#constructing-the-neural-network">
+     Constructing the neural network
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training">
+   Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -262,8 +343,40 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="open-classification-of-regimes-in-the-southeast-usa">
+  <!-- #region -->
+<section class="tex2jax_ignore mathjax_ignore" id="open-classification-of-regimes-in-the-southeast-usa">
 <h1>Open Classification of Regimes in the Southeast USA<a class="headerlink" href="#open-classification-of-regimes-in-the-southeast-usa" title="Permalink to this headline">#</a></h1>
+<p>The U.S. Department of Energy (DOE) Office of Science’s AI for Earth System Predictability (AI4ESP) initiative looks to explore how various AI techniques can help improve our ability to analyze weather and climate data as well as how it can improve climate prediction. As a part of this initiative, Open Classification of Regimes in the Southeast USA (OpenCRUMS USA) is a seed effort to explore how AI can be used on reanalysis datasets to cluster reanalysis observations over U.S. DOE Atmospheric Radiation Measurement (ARM) sites. Having objective classifications of the aerosol and meteorological conditions over the ARM sites will help investigators by providing a labelled dataset for periods of interest to the investigator (i.e. polluted and pre-trough, etc.). With this, investigators studying aerosol-cloud interactions can look for cases with different aerosol loadings and synoptic forcing.</p>
+<p>Of particular interest to OpenCRUMS USA are Houston, TX where the DOE TRacking Aerosol Cloud Interactions ExpeRiment (TRACER) took place during Summer 2022 as well as the ARM Mobile Facility deployment in Northern Alabama that will commence in 2023.</p>
+<!-- #endregion -->
+<!-- #region -->
+<section id="aerosol-regime-classification">
+<h2>Aerosol regime classification.<a class="headerlink" href="#aerosol-regime-classification" title="Permalink to this headline">#</a></h2>
+<section id="constructing-the-neural-network">
+<h3>Constructing the neural network<a class="headerlink" href="#constructing-the-neural-network" title="Permalink to this headline">#</a></h3>
+<p>Each input from the MERRA 2 model is an input to a parallel neural network that uses a Convolutional Neural Network (CNN) for each branch corresponding to an input to extract the relevant spatial features. CNNs are Neural Networks that are designed to extract relevant spatial features from multi-dimensional spatial data. They do so by extracting features on a sliding window in the domain and then storing those features in a lower-dimensional space as demonstrated in the figure below.</p>
+<p><img alt="" src="_images/basic_nn.jpeg" /></p>
+<p>Diagram is Fig 1. of Phung and Rhee (2019).</p>
+<p>These features are then concatenated together into a single representation that is a lower-dimensional vector representation of the input data.</p>
+<p><img alt="" src="_images/feature_extractor.png" /></p>
+<p>These features are then an input to a classifier neural network that is composed of fully connected layers. The output of this layer is the EPA AirNow classification.
+<img alt="" src="_images/classifier.png" /></p>
+<!-- #endregion -->
+</section>
+</section>
+<section id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">#</a></h2>
+<p>The network was trained over 10 years of MERRA2 aerosol inputs. In total, 17 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO2, SO4, Organics, and Black Carbon column mass and horizontal fluxes.</p>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h3>
+<p>Phung, V.H.; Rhee, E.J. A High-Accuracy Model Average Ensemble of Convolutional Neural Networks for Classification of Cloud Image Patches on Small Datasets. Appl. Sci. 2019, 9, 4500. https://doi.org/10.3390/app9214500</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -293,6 +406,13 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="notebooks/Preprocessing_MERRA2.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Preprocessing MERRA2 data</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>
@@ -300,7 +420,7 @@ title="Print to PDF"
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By ARM Development Team<br/>
+    By Geospatial Computing, Innovation, and Sensing @ ANL<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

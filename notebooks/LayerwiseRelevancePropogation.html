@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Layerwise Relevance Propogation &#8212; Cookbook Template</title>
+    <title>Layerwise Relevance Propogation &#8212; Open Classification of Regimes in the Southeast USA</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -94,10 +94,10 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="../_static/arm_logo.png" class="logo" alt="logo">
+      <img src="../_static/ai4esp.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Cookbook Template</h1>
+      <h1 class="site-logo" id="site-title">Open Classification of Regimes in the Southeast USA</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -108,7 +108,7 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../markdown.html">
+                <a class="reference internal" href="../README.html">
                     Open Classification of Regimes in the Southeast USA
                 </a>
             </li>
@@ -119,6 +119,11 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Preprocessing_MERRA2.html">
+   Preprocessing MERRA2 data
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CNN_training_example.html">
    Code for training Convolutional Neural Network
@@ -884,63 +889,6 @@ Data variables:
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
-200
-300
-400
-500
-600
-700
-800
-900
-1000
-1100
-1200
-1300
-1400
-1500
-1600
-1700
-1800
-1900
-2000
-2100
-2200
-2300
-2400
-2500
-2600
-2700
-2800
-2900
-3000
-3100
-3200
-3300
-3400
-3500
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [12],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">relevance</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_slice</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;relevances/relevance</span><span class="si">%d</span><span class="s1">-</span><span class="si">%s</span><span class="s1">hr.pickle&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="ne">----&gt; </span><span class="mi">8</span>     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">relevance</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-
-<span class="nn">File ~/.conda/envs/pydda_env/lib/python3.9/site-packages/tensorflow/python/framework/ops.py:1073,</span> in <span class="ni">_EagerTensorBase.__reduce__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1070</span>   <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1071</span>     <span class="k">return</span> <span class="s2">&quot;&lt;unprintable&gt;&quot;</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">format_spec</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1073</span> <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1074</span>   <span class="k">return</span> <span class="n">convert_to_tensor</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy</span><span class="p">(),)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1076</span> <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1077</span>   <span class="c1"># Eager Tensors are immutable so it&#39;s safe to return themselves as a copy.</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -993,7 +941,7 @@ Data variables:
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By ARM Development Team<br/>
+    By Geospatial Computing, Innovation, and Sensing @ ANL<br/>
   
       &copy; Copyright 2022.<br/>
 </p>
