@@ -134,6 +134,11 @@ const thebe_selector_output = ".output, .cell_output"
    Layerwise Relevance Propogation
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebooks/Make_RLP_plot.html">
+   Combining it all together
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -272,6 +277,11 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#input-data">
+     Input data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#constructing-the-neural-network">
      Constructing the neural network
     </a>
@@ -315,6 +325,11 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#input-data">
+     Input data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#constructing-the-neural-network">
      Constructing the neural network
     </a>
@@ -347,11 +362,15 @@ title="Print to PDF"
 <section class="tex2jax_ignore mathjax_ignore" id="open-classification-of-regimes-in-the-southeast-usa">
 <h1>Open Classification of Regimes in the Southeast USA<a class="headerlink" href="#open-classification-of-regimes-in-the-southeast-usa" title="Permalink to this headline">#</a></h1>
 <p>The U.S. Department of Energy (DOE) Office of Science’s AI for Earth System Predictability (AI4ESP) initiative looks to explore how various AI techniques can help improve our ability to analyze weather and climate data as well as how it can improve climate prediction. As a part of this initiative, Open Classification of Regimes in the Southeast USA (OpenCRUMS USA) is a seed effort to explore how AI can be used on reanalysis datasets to cluster reanalysis observations over U.S. DOE Atmospheric Radiation Measurement (ARM) sites. Having objective classifications of the aerosol and meteorological conditions over the ARM sites will help investigators by providing a labelled dataset for periods of interest to the investigator (i.e. polluted and pre-trough, etc.). With this, investigators studying aerosol-cloud interactions can look for cases with different aerosol loadings and synoptic forcing.</p>
-<p>Of particular interest to OpenCRUMS USA are Houston, TX where the DOE TRacking Aerosol Cloud Interactions ExpeRiment (TRACER) took place during Summer 2022 as well as the ARM Mobile Facility deployment in Northern Alabama that will commence in 2023.</p>
+<p>Of particular interest to OpenCRUMS USA are Houston, TX where the DOE <a class="reference external" href="https://www.arm.gov/research/campaigns/amf2021tracer">TRacking Aerosol Cloud Interactions ExpeRiment (TRACER)</a> took place during Summer 2022 as well as the ARM Mobile Facility deployment in the <a class="reference external" href="https://www.arm.gov/capabilities/observatories/amf/locations/bnf">Southeastern United States</a> that will commence in 2023. For the TRACER field experiment the U.S. DOE deployed the <a class="reference external" href="https://www.arm.gov/capabilities/observatories/amf">ARM Mobile Facility</a> to Houston, TX with aerosol and meteorological measurement instruments. The primary focus of TRACER was to characterize the lifecycle of deep convection and its interaction with aerosols. The TRACER domain provides a natural laboratory for doing so by providing an environment favorable for isolated seabreeze convection to form off of the Gulf Coast to then enter the more polluted Houston region. The isolated nature of the convection allows for easier tracking of the convective lifecycle and the gradient of clean to polluted air as one moves inland into the Houston metro provides an aerosol perturbation. Therefore, this motivates OpenCRUMS to characterize potential aerosol regimes and sources. Since meteorological factors can influence both convective and aerosol properties, OpenCRUMS is also interested in exploring machine learning techniques for characterizing meteorological regimes over Houston and the Southeastern United States.</p>
 <!-- #endregion -->
 <!-- #region -->
 <section id="aerosol-regime-classification">
 <h2>Aerosol regime classification.<a class="headerlink" href="#aerosol-regime-classification" title="Permalink to this headline">#</a></h2>
+<section id="input-data">
+<h3>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">#</a></h3>
+<p>The data in this notebook is the Modern Era Retrospective Reanalysis 2 from NASA. In particular, the data used here are the 2D aerosol products that are availaile in MERRA2. In order to download the data, click <a class="reference external" href="https://disc.gsfc.nasa.gov/datasets/M2T1NXAER_5.12.4/summary">here</a>.</p>
+</section>
 <section id="constructing-the-neural-network">
 <h3>Constructing the neural network<a class="headerlink" href="#constructing-the-neural-network" title="Permalink to this headline">#</a></h3>
 <p>Each input from the MERRA 2 model is an input to a parallel neural network that uses a Convolutional Neural Network (CNN) for each branch corresponding to an input to extract the relevant spatial features. CNNs are Neural Networks that are designed to extract relevant spatial features from multi-dimensional spatial data. They do so by extracting features on a sliding window in the domain and then storing those features in a lower-dimensional space as demonstrated in the figure below.</p>
@@ -366,13 +385,11 @@ title="Print to PDF"
 </section>
 <section id="training">
 <h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">#</a></h2>
-<p>The network was trained over 10 years of MERRA2 aerosol inputs. In total, 17 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO2, SO4, Organics, and Black Carbon column mass and horizontal fluxes.</p>
+<p>The network was trained over 10 years of hourly MERRA2 aerosol inputs from 2010-2020. In total, 17 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO2, SO4, Organics, and Black Carbon column mass and horizontal fluxes.</p>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h3>
 <p>Phung, V.H.; Rhee, E.J. A High-Accuracy Model Average Ensemble of Convolutional Neural Networks for Classification of Cloud Image Patches on Small Datasets. Appl. Sci. 2019, 9, 4500. https://doi.org/10.3390/app9214500</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+<p>Global Modeling and Assimilation Office (GMAO) (2015), MERRA-2 tavg1_2d_aer_Nx: 2d,1-Hourly,Time-averaged,Single-Level,Assimilation,Aerosol Diagnostics V5.12.4, Greenbelt, MD, USA, Goddard Earth Sciences Data and Information Services Center (GES DISC), Accessed: 20 Sept 2021, 10.5067/KLICLTZ8EM9D</p>
 </section>
 </section>
 <div class="toctree-wrapper compound">
