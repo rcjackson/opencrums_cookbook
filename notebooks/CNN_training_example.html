@@ -346,6 +346,12 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/rjackson/.conda/envs/pydda_env/lib/python3.9/site-packages/xarray/backends/cfgrib_.py:27: UserWarning: Failed to load cfgrib - most likely there is a problem accessing the ecCodes library. Try `import cfgrib` to get the full error message
+  warnings.warn(
+</pre></div>
+</div>
+</div>
 </div>
 <p>Next, we load the EPA AirNow data into a Pandas dataframe.</p>
 <div class="cell docutils container">
@@ -363,6 +369,11 @@ title="Print to PDF"
 
 <span class="c1"># Insert the path to your cropped dataset here</span>
 <span class="n">input_merra_path</span> <span class="o">=</span> <span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_reduced/&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
 </pre></div>
 </div>
 </div>
@@ -516,7 +527,7 @@ title="Print to PDF"
             <span class="n">x_ds_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> 
             <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_ds_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;num_epochs&quot;</span><span class="p">],</span>
             <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">],</span> <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weight</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;../models/classifier-</span><span class="si">%s</span><span class="s1">-lag-</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">lag</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;classifier-</span><span class="si">%s</span><span class="s1">-lag-</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">lag</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span>
 </pre></div>
 </div>
@@ -526,7 +537,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">default_config</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;num_epochs&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>        <span class="c1"># Number of training epochs. Recommended to use 200+</span>
+        <span class="s2">&quot;num_epochs&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>        <span class="c1"># Number of training epochs. Recommended to use 200+ fo, 10 here is to make cookbook short</span>
         <span class="s2">&quot;num_channels&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>     <span class="c1"># Number of channels in Conv2D layer </span>
         <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="c1"># Learning rate for training</span>
         <span class="s2">&quot;num_dense_nodes&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>    <span class="c1"># Number of nodes in each dense layer of the classifier</span>
@@ -538,6 +549,206 @@ title="Print to PDF"
         <span class="s2">&quot;species_list&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;SS&#39;</span><span class="p">,</span> <span class="s1">&#39;SO4&#39;</span><span class="p">,</span> <span class="s1">&#39;SO2&#39;</span><span class="p">,</span> <span class="s1">&#39;OC&#39;</span><span class="p">,</span> <span class="s1">&#39;DU&#39;</span><span class="p">,</span> <span class="s1">&#39;DMS&#39;</span><span class="p">,</span> <span class="s1">&#39;BC&#39;</span><span class="p">]}</span>
 
 <span class="n">history</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">default_config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SS
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/rjackson/.conda/envs/pydda_env/lib/python3.9/site-packages/xarray/backends/plugins.py:61: RuntimeWarning: Engine &#39;cfgrib&#39; loading failed:
+Cannot find the ecCodes library
+  warnings.warn(f&quot;Engine {name!r} loading failed:\n{ex}&quot;, RuntimeWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:    (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon        (lon) float64 -105.0 -104.4 -103.8 ... -86.88 -86.25 -85.62
+  * lat        (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time       (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    SSCMASS    (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+    SSCMASS25  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-10-21 13:52:27.969958: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-10-21 13:52:28.469454: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1525] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 38396 MB memory:  -&gt; device: 0, name: NVIDIA A100-SXM4-40GB, pci bus id: 0000:07:00.0, compute capability: 8.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SO4
+&lt;xarray.Dataset&gt;
+Dimensions:   (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon       (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat       (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    SO4CMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+SO2
+&lt;xarray.Dataset&gt;
+Dimensions:   (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon       (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat       (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    SO2CMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+OC
+&lt;xarray.Dataset&gt;
+Dimensions:  (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon      (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat      (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 32.5 33.0 33.5 34.0 34.5
+  * time     (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    OCCMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+DU
+&lt;xarray.Dataset&gt;
+Dimensions:    (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon        (lon) float64 -105.0 -104.4 -103.8 ... -86.88 -86.25 -85.62
+  * lat        (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time       (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    DUCMASS    (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+    DUCMASS25  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+DMS
+&lt;xarray.Dataset&gt;
+Dimensions:   (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon       (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat       (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 33.0 33.5 34.0 34.5
+  * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    DMSCMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+BC
+&lt;xarray.Dataset&gt;
+Dimensions:  (lon: 32, lat: 20, time: 90744)
+Coordinates:
+  * lon      (lon) float64 -105.0 -104.4 -103.8 -103.1 ... -86.88 -86.25 -85.62
+  * lat      (lat) float64 25.0 25.5 26.0 26.5 27.0 ... 32.5 33.0 33.5 34.0 34.5
+  * time     (time) datetime64[ns] 2010-01-01T00:30:00 ... 2020-05-08T23:30:00
+Data variables:
+    BCCMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 20, 32), meta=np.ndarray&gt;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/rjackson/.conda/envs/pydda_env/lib/python3.9/site-packages/keras/optimizer_v2/adam.py:105: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.
+  super(Adam, self).__init__(name, **kwargs)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model&quot;
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_2 (InputLayer)           [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ input_3 (InputLayer)           [(None, 20, 32, 1)]  0           []                               
+                                                                                                  
+ conv2d (Conv2D)                (None, 20, 32, 128)  640         [&#39;input_1[0][0]&#39;]                
+                                                                                                  
+ conv2d_2 (Conv2D)              (None, 20, 32, 128)  640         [&#39;input_2[0][0]&#39;]                
+                                                                                                  
+ conv2d_4 (Conv2D)              (None, 20, 32, 128)  640         [&#39;input_3[0][0]&#39;]                
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 20, 32, 128)  512        [&#39;conv2d[0][0]&#39;]                 
+ alization)                                                                                       
+                                                                                                  
+ batch_normalization_2 (BatchNo  (None, 20, 32, 128)  512        [&#39;conv2d_2[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_4 (BatchNo  (None, 20, 32, 128)  512        [&#39;conv2d_4[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ max_pooling2d (MaxPooling2D)   (None, 10, 16, 128)  0           [&#39;batch_normalization[0][0]&#39;]    
+                                                                                                  
+ max_pooling2d_2 (MaxPooling2D)  (None, 10, 16, 128)  0          [&#39;batch_normalization_2[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_4 (MaxPooling2D)  (None, 10, 16, 128)  0          [&#39;batch_normalization_4[0][0]&#39;]  
+                                                                                                  
+ conv2d_1 (Conv2D)              (None, 10, 16, 128)  65664       [&#39;max_pooling2d[0][0]&#39;]          
+                                                                                                  
+ conv2d_3 (Conv2D)              (None, 10, 16, 128)  65664       [&#39;max_pooling2d_2[0][0]&#39;]        
+                                                                                                  
+ conv2d_5 (Conv2D)              (None, 10, 16, 128)  65664       [&#39;max_pooling2d_4[0][0]&#39;]        
+                                                                                                  
+ batch_normalization_1 (BatchNo  (None, 10, 16, 128)  512        [&#39;conv2d_1[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_3 (BatchNo  (None, 10, 16, 128)  512        [&#39;conv2d_3[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ batch_normalization_5 (BatchNo  (None, 10, 16, 128)  512        [&#39;conv2d_5[0][0]&#39;]               
+ rmalization)                                                                                     
+                                                                                                  
+ max_pooling2d_1 (MaxPooling2D)  (None, 5, 8, 128)   0           [&#39;batch_normalization_1[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_3 (MaxPooling2D)  (None, 5, 8, 128)   0           [&#39;batch_normalization_3[0][0]&#39;]  
+                                                                                                  
+ max_pooling2d_5 (MaxPooling2D)  (None, 5, 8, 128)   0           [&#39;batch_normalization_5[0][0]&#39;]  
+                                                                                                  
+ flatten (Flatten)              (None, 5120)         0           [&#39;max_pooling2d_1[0][0]&#39;]        
+                                                                                                  
+ flatten_1 (Flatten)            (None, 5120)         0           [&#39;max_pooling2d_3[0][0]&#39;]        
+                                                                                                  
+ flatten_2 (Flatten)            (None, 5120)         0           [&#39;max_pooling2d_5[0][0]&#39;]        
+                                                                                                  
+ add (Add)                      (None, 5120)         0           [&#39;flatten[0][0]&#39;,                
+                                                                  &#39;flatten_1[0][0]&#39;,              
+                                                                  &#39;flatten_2[0][0]&#39;]              
+                                                                                                  
+ dense (Dense)                  (None, 8)            40968       [&#39;add[0][0]&#39;]                    
+                                                                                                  
+ batch_normalization_6 (BatchNo  (None, 8)           32          [&#39;dense[0][0]&#39;]                  
+ rmalization)                                                                                     
+                                                                                                  
+ dense_1 (Dense)                (None, 8)            72          [&#39;batch_normalization_6[0][0]&#39;]  
+                                                                                                  
+ batch_normalization_7 (BatchNo  (None, 8)           32          [&#39;dense_1[0][0]&#39;]                
+ rmalization)                                                                                     
+                                                                                                  
+ dense_2 (Dense)                (None, 8)            72          [&#39;batch_normalization_7[0][0]&#39;]  
+                                                                                                  
+ batch_normalization_8 (BatchNo  (None, 8)           32          [&#39;dense_2[0][0]&#39;]                
+ rmalization)                                                                                     
+                                                                                                  
+ class (Dense)                  (None, 5)            45          [&#39;batch_normalization_8[0][0]&#39;]  
+                                                                                                  
+==================================================================================================
+Total params: 243,237
+Trainable params: 241,653
+Non-trainable params: 1,584
+__________________________________________________________________________________________________
+Epoch 1/10
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-10-21 13:56:35.550070: I tensorflow/stream_executor/cuda/cuda_dnn.cc:366] Loaded cuDNN version 8201
+2022-10-21 13:56:39.240906: I tensorflow/core/platform/default/subprocess.cc:304] Start cannot spawn child process: No such file or directory
+2022-10-21 13:56:43.187227: I tensorflow/stream_executor/cuda/cuda_blas.cc:1774] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5171/5171 [==============================] - 37s 5ms/step - loss: 17.7415 - acc: 0.1739 - val_loss: 1.6914 - val_acc: 0.2393
+Epoch 2/10
+5171/5171 [==============================] - 23s 5ms/step - loss: 13.6297 - acc: 0.2408 - val_loss: 1.7013 - val_acc: 0.2383
+Epoch 3/10
+5171/5171 [==============================] - 23s 4ms/step - loss: 11.5479 - acc: 0.2662 - val_loss: 1.5164 - val_acc: 0.2916
+Epoch 4/10
+5171/5171 [==============================] - 23s 5ms/step - loss: 10.2620 - acc: 0.2709 - val_loss: 1.5523 - val_acc: 0.2610
+Epoch 5/10
+5171/5171 [==============================] - 23s 5ms/step - loss: 9.2578 - acc: 0.2775 - val_loss: 1.5187 - val_acc: 0.2725
+Epoch 6/10
+5171/5171 [==============================] - 23s 4ms/step - loss: 8.3513 - acc: 0.2832 - val_loss: 1.6070 - val_acc: 0.2544
+Epoch 7/10
+5171/5171 [==============================] - 23s 4ms/step - loss: 7.5896 - acc: 0.2909 - val_loss: 1.4485 - val_acc: 0.2831
+Epoch 8/10
+5171/5171 [==============================] - 23s 4ms/step - loss: 7.3933 - acc: 0.2979 - val_loss: 1.4658 - val_acc: 0.2802
+Epoch 9/10
+5171/5171 [==============================] - 23s 5ms/step - loss: 6.8175 - acc: 0.2969 - val_loss: 1.3488 - val_acc: 0.2961
+Epoch 10/10
+3696/5171 [====================&gt;.........] - ETA: 5s - loss: 6.5437 - acc: 0.3028
 </pre></div>
 </div>
 </div>
