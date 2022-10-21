@@ -6,3 +6,4 @@ parts:
     - file: notebooks/Preprocessing_MERRA2.ipynb
     - file: notebooks/CNN_training_example.ipynb
     - file: notebooks/LayerwiseRelevancePropogation.ipynb
+    - file: notebooks/Make_RLP_plot.ipynb
