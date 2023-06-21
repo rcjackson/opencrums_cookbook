@@ -29,13 +29,13 @@ These features are then concatenated together into a single representation that 
 
 ![](notebooks/feature_extractor.png)
 
-These features are then an input to a classifier neural network that is composed of fully connected layers. The output of this layer is the EPA AirNow classification.
+These features are then an input to a classifier neural network that is composed of fully connected layers. The output of this layer is the EPA AirNow PM2.5 classification for Houston.
 ![](/notebooks/classifier.png)
 <!-- #endregion -->
 
 ## Training
 
-The network was trained over 10 years of hourly MERRA2 aerosol inputs from 2010-2020. In total, 17 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO2, SO4, Organics, and Black Carbon column mass and horizontal fluxes.
+The network was trained over 12 years of hourly MERRA2 aerosol inputs from 2010-2022. In total, 5 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO4, Organics, and Black Carbon column mass.
 
 
 ### References
