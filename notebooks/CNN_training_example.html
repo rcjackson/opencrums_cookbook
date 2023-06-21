@@ -404,39 +404,18 @@ document.write(`
 <p>Next, we load the EPA AirNow data into a Pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">air_now_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/epa_air_now/*.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">air_now_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span>
+        <span class="s1">&#39;/lcrc/group/earthscience/rjackson/epa_air_now/*.csv&#39;</span><span class="p">)</span>
 <span class="n">air_now_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">,</span> <span class="n">air_now_data</span><span class="p">))</span>
-<span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;DateObserved&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; 00:00:00&#39;</span><span class="p">)</span>
+<span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+        <span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;DateObserved&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; 00:00:00&#39;</span><span class="p">)</span>
 <span class="n">air_now_df</span> <span class="o">=</span> <span class="n">air_now_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
 <span class="n">air_now_df</span> <span class="o">=</span> <span class="n">air_now_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;CategoryNumber&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
-
-<span class="c1"># How many timesteps ahead should we predict?</span>
-<span class="n">lag</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">site</span> <span class="o">=</span> <span class="s2">&quot;hou&quot;</span>
-
-<span class="c1"># Insert the path to your cropped dataset here</span>
+<span class="n">air_now_df</span> <span class="o">=</span> <span class="n">air_now_df</span><span class="p">[</span><span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;ParameterName&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;PM2.5&quot;</span><span class="p">]</span>
+<span class="n">air_now_label</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">air_now_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> 
+                            <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;CategoryNumber&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))})</span>
+<span class="c1"># Input data path</span>
 <span class="n">input_merra_path</span> <span class="o">=</span> <span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_reduced/&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
-</pre></div>
-</div>
-</div>
-</div>
-<p>This next block of code will grab the EPA AirNow classification given a particular datetime. We are only concerned about Good and Moderate AQI for training.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_air_now_label</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">air_now_df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">time</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">air_now_df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">time</span><span class="p">))</span>
-    <span class="n">cat_number</span> <span class="o">=</span> <span class="n">air_now_df</span><span class="p">[</span><span class="s1">&#39;CategoryNumber&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">cat_number</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">cat_number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-    <span class="k">return</span> <span class="n">cat_number</span>
 </pre></div>
 </div>
 </div>
@@ -455,7 +434,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_indices</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">species</span><span class="p">):</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/</span><span class="si">%s</span><span class="s1">_extended/</span><span class="si">%s</span><span class="s1">SMASS*.nc&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">species</span><span class="p">))</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="s1">&#39;/lcrc/group/earthscience/rjackson/MERRA2/hou_extended/</span><span class="si">%s</span><span class="s1">SMASS*.nc&#39;</span> <span class="o">%</span> <span class="n">species</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
     <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">values</span><span class="p">)))</span>
     <span class="k">try</span><span class="p">:</span>
@@ -469,7 +448,9 @@ document.write(`
     <span class="n">x</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">old_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">old_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">old_shape</span><span class="p">)</span>
-    <span class="n">classification</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">get_air_now_label</span><span class="p">,</span> <span class="n">times</span><span class="p">)))</span>
+    <span class="n">air_now_label</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="s2">&quot;air_now_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
+        <span class="n">time</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">))</span>
+    <span class="n">classification</span> <span class="o">=</span> <span class="n">air_now_label</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">where_valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">classification</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">where_valid</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
     <span class="n">classification</span> <span class="o">=</span> <span class="n">classification</span><span class="p">[</span><span class="n">where_valid</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
@@ -634,7 +615,14 @@ Coordinates:
 Data variables:
     SSSMASS    (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
     SSSMASS25  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
-[    0     1     2 ... 26952  4914 45882]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-06-21 18:40:06.762685: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-06-21 18:40:10.507945: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1525] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 38396 MB memory:  -&gt; device: 0, name: NVIDIA A100-SXM4-40GB, pci bus id: 0000:07:00.0, compute capability: 8.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
 SO4
 &lt;xarray.Dataset&gt;
 Dimensions:   (lon: 17, lat: 21, time: 113952)
@@ -644,7 +632,7 @@ Coordinates:
   * time      (time) datetime64[ns] 2010-01-01T00:30:00 ... 2022-12-31T23:30:00
 Data variables:
     SO4SMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
-[    0     1     2 ... 26952  4914 45882]
+[    0     1     2 ... 62188 65126 30657]
 OC
 &lt;xarray.Dataset&gt;
 Dimensions:  (lon: 17, lat: 21, time: 113952)
@@ -654,7 +642,7 @@ Coordinates:
   * time     (time) datetime64[ns] 2010-01-01T00:30:00 ... 2022-12-31T23:30:00
 Data variables:
     OCSMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
-[    0     1     2 ... 26952  4914 45882]
+[    0     1     2 ... 62188 65126 30657]
 DU
 &lt;xarray.Dataset&gt;
 Dimensions:    (lon: 17, lat: 21, time: 113952)
@@ -665,7 +653,7 @@ Coordinates:
 Data variables:
     DUSMASS    (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
     DUSMASS25  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
-[    0     1     2 ... 26952  4914 45882]
+[    0     1     2 ... 62188 65126 30657]
 BC
 &lt;xarray.Dataset&gt;
 Dimensions:  (lon: 17, lat: 21, time: 113952)
@@ -675,7 +663,7 @@ Coordinates:
   * time     (time) datetime64[ns] 2010-01-01T00:30:00 ... 2022-12-31T23:30:00
 Data variables:
     BCSMASS  (time, lat, lon) float32 dask.array&lt;chunksize=(8760, 21, 17), meta=np.ndarray&gt;
-[    0     1     2 ... 26952  4914 45882]
+[    0     1     2 ... 62188 65126 30657]
 </pre></div>
 </div>
 </div>
@@ -688,6 +676,7 @@ Data variables:
 </div>
 </div>
 <p>Now plot the confusion matrix using scikit-learn’s <em>ConfusionMatrixDisplay</em> class and the <em>confusion_matrix</em> method for generating confusion matrices. Confusion matrices show the performance of the model for each class and therefore give a fuller picture of model performance compared to accuracy. In an imbalanced dataset such as this, high accuracy values may not necessarily mean that the model is predicting the output class well if a majority of the dataset belongs to one class. Therefore, using confusion matrices, precision, and recall will provide a more honest picture of model performance for these imbalanced datasets.</p>
+<p>However, as we can see here, this model is an extremely good predictor of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_valid_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_ds_valid</span><span class="p">)</span>
@@ -699,36 +688,15 @@ Data variables:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x152adcd12b20&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-06-21 18:41:53.454634: I tensorflow/stream_executor/cuda/cuda_dnn.cc:366] Loaded cuDNN version 8201
+2023-06-21 18:41:58.029549: I tensorflow/core/platform/default/subprocess.cc:304] Start cannot spawn child process: No such file or directory
+2023-06-21 18:42:03.508516: I tensorflow/stream_executor/cuda/cuda_blas.cc:1774] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
 </pre></div>
 </div>
-<img alt="../_images/656465152658ace781884a76f093f35e06f6bd8c687aa4d585c6878d56d8b2da.png" src="../_images/656465152658ace781884a76f093f35e06f6bd8c687aa4d585c6878d56d8b2da.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test1</span><span class="p">,</span> <span class="n">y_validation1</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">y_test2</span><span class="p">,</span> <span class="n">y_validation2</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">y_test1</span> <span class="o">==</span> <span class="n">y_test2</span><span class="p">)</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;sklearn.metrics._plot.confusion_matrix.ConfusionMatrixDisplay at 0x14cc84ac8a90&gt;
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">5685</span><span class="o">+</span><span class="mi">2051</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">5685</span><span class="o">+</span><span class="mi">2051</span><span class="o">+</span><span class="mi">454</span><span class="o">+</span><span class="mi">1252</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8193179411141708
-</pre></div>
-</div>
+<img alt="../_images/131fb0e585c81396dbb5177c025445e74dc80450617265bbf2c8f5728b9220fb.png" src="../_images/131fb0e585c81396dbb5177c025445e74dc80450617265bbf2c8f5728b9220fb.png" />
 </div>
 </div>
 </section>
