@@ -353,14 +353,14 @@ document.write(`
 <p>Diagram is Fig 1. of Phung and Rhee (2019).</p>
 <p>These features are then concatenated together into a single representation that is a lower-dimensional vector representation of the input data.</p>
 <p><img alt="" src="_images/feature_extractor.png" /></p>
-<p>These features are then an input to a classifier neural network that is composed of fully connected layers. The output of this layer is the EPA AirNow classification.
+<p>These features are then an input to a classifier neural network that is composed of fully connected layers. The output of this layer is the EPA AirNow PM2.5 classification for Houston.
 <img alt="" src="_images/classifier.png" /></p>
 <!-- #endregion -->
 </section>
 </section>
 <section id="training">
 <h2>Training<a class="headerlink" href="#training" title="Permalink to this heading">#</a></h2>
-<p>The network was trained over 10 years of hourly MERRA2 aerosol inputs from 2010-2020. In total, 17 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO2, SO4, Organics, and Black Carbon column mass and horizontal fluxes.</p>
+<p>The network was trained over 12 years of hourly MERRA2 aerosol inputs from 2010-2022. In total, 5 inputs were chosen for the CNN network. These inputs related to the mass and transport of the aerosol species available in MERRA2: Dust, sea salt, SO4, Organics, and Black Carbon column mass.</p>
 <section id="references">
 <h3>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h3>
 <p>Phung, V.H.; Rhee, E.J. A High-Accuracy Model Average Ensemble of Convolutional Neural Networks for Classification of Cloud Image Patches on Small Datasets. Appl. Sci. 2019, 9, 4500. https://doi.org/10.3390/app9214500</p>
